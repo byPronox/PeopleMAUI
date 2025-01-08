@@ -9,6 +9,10 @@ public partial class App : Application
         InitializeComponent();
         PersonRepo = repo;
 
-        MainPage = new MainPage();
+        MainPage = new MainPage
+        {
+            Title = "Stefan Jativa"
+        };
     }
 }
+

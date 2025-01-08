@@ -9,6 +9,9 @@ public class PersonRepository
 
     public string StatusMessage { get; set; }
 
+    private const string DatabaseFileName = "Stefan_Jativa_People.db";
+
+
     // TODO: Add variable for the SQLite connection
     private SQLiteConnection conn;
 
@@ -23,11 +26,11 @@ public class PersonRepository
 
     public PersonRepository(string dbPath)
     {
-        _dbPath = dbPath;                        
+        _dbPath = dbPath;
     }
 
     public void AddNewPerson(string name)
-    {            
+    {
         int result = 0;
         try
         {
@@ -65,4 +68,19 @@ public class PersonRepository
 
         return new List<Person>();
     }
+
+    public void DeletePerson(int id)
+    {
+        try
+        {
+            Init();
+            conn.Delete<Person>(id);
+            StatusMessage = $"Person with ID {id} deleted successfully.";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Failed to delete person. Error: {ex.Message}";
+        }
+    }
+
 }

@@ -7,3 +7,4 @@ public class FileAccessHelper
         return System.IO.Path.Combine(FileSystem.AppDataDirectory, filename);
     }
 }
+

@@ -1,38 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="People.MainPage" 
-             BackgroundColor="{DynamicResource Light}">
+             xmlns:vm="clr-namespace:People.ViewModels"
+             x:Class="People.MainPage"
+             BackgroundColor="YellowGreen">
 
-    <Grid Padding="5" RowSpacing="5" ColumnSpacing="5"
-          RowDefinitions="Auto,Auto,Auto,Auto,*">
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel />
+    </ContentPage.BindingContext>
 
-        <Entry x:Name="newPerson"
-           Placeholder="Enter name" />
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="20">
 
-        <Button Text="Add Person"
-            Grid.Row="1"
-            Clicked="OnNewButtonClicked" />
+            <!-- Tarjeta personalizada -->
+            <Frame Padding="10" CornerRadius="15" BackgroundColor="LightBlue" HorizontalOptions="FillAndExpand">
+                <HorizontalStackLayout Spacing="10">
 
-        <Label x:Name="statusMessage"
-           TextColor="{StaticResource Primary}"
-           Grid.Row="2" />
+                    <Image Source="chill.png"
+                       WidthRequest="100"
+                       HeightRequest="100"
+                       Aspect="AspectFill" />
 
-        <Button Text="Get All People"
-            Grid.Row="3"
-            Clicked="OnGetButtonClicked" />
 
-        <CollectionView x:Name="peopleList" Grid.Row="4">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="*,2*">
-                        <Label Text="{Binding Id}" TextColor="{StaticResource Primary}"/>
-                        <Label Grid.Column="1" Text="{Binding Name}" TextColor="{StaticResource Primary}"/>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    <VerticalStackLayout>
+                        <Label Text="Nombre: Stefan Jativa"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               TextColor="Black" />
+                        <Label Text="Edad: 20 años" 
+                               FontSize="16"
+                               TextColor="Black" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
 
-    </Grid>
+
+            <Entry x:Name="stefan_newPersonEntry"
+                   Placeholder="Enter name"
+                   Text="{Binding NewPersonName}" />
+
+
+            <Button Text="Add Person"
+                    Command="{Binding AddPersonCommand}" />
+
+
+            <Label x:Name="stefan_statusMessage"
+                   Text="{Binding StatusMessage}"
+                   TextColor="{StaticResource Primary}" />
+
+
+            <Button Text="Get All People"
+                    Command="{Binding GetPeopleCommand}" />
+
+
+            <ListView x:Name="stefan_peopleList"
+                      ItemsSource="{Binding People}"
+                      SelectedItem="{Binding SelectedPerson, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*,2*">
+                                <Label Text="{Binding Id}" TextColor="{StaticResource Primary}" />
+                                <Label Grid.Column="1" Text="{Binding Name}" TextColor="{StaticResource Primary}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
